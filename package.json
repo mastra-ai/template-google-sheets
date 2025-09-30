@@ -28,7 +28,8 @@
     "@mastra/memory": "^0.15.3",
     "@openrouter/ai-sdk-provider": "^0.7.5",
     "hono": "^4.9.7",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "@ai-sdk/groq": "^2.0.22"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
