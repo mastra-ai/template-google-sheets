@@ -1,7 +1,7 @@
 import { Mastra } from '@mastra/core/mastra';
 import { PinoLogger } from '@mastra/loggers';
 import { financialModelingAgent } from './agents/financial-modeling-agent';
-import { RuntimeContext } from '@mastra/core/request-context';
+import { RuntimeContext } from '@mastra/core/runtime-context';
 import { HTTPException } from 'hono/http-exception';
 import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
 import { Composio } from '@composio/core';
@@ -10,12 +10,10 @@ import { MastraProvider } from '@composio/mastra';
 export const mastra = new Mastra({
   agents: { financialModelingAgent },
   storage: new LibSQLStore({
-    id: 'mastra-storage',
     url: 'file:../../mastra.db',
   }),
   vectors: {
     default: new LibSQLVector({
-      id: 'mastra-vector',
       connectionUrl: 'file:../../mastra.db',
     }),
   },
@@ -42,7 +40,7 @@ export const mastra = new Mastra({
             message: 'COMPOSIO_AUTH_CONFIG_ID missing',
           });
 
-        // TODO: Retrieve unique user id and set it on the request context
+        // TODO: Retrieve unique user id and set it on the runtime context
         // Consider using Authentication headers for user identification
         // e.g const bearerToken = c.get('Authorization')
         // https://mastra.ai/en/docs/server-db/middleware#common-examples

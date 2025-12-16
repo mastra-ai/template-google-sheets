@@ -9,7 +9,6 @@ import { MastraProvider } from '@composio/mastra';
 const MAX_STEPS = 1000;
 
 export const financialModelingAgent = new Agent({
-  id: 'financial-modeling-agent',
   name: 'Financial Modeling Agent',
   instructions: ({ runtimeContext }) => {
     const redirectUrl = runtimeContext.get<'redirectUrl', string | undefined>('redirectUrl');
@@ -29,11 +28,9 @@ ${getFinancialModelingAgentPrompt(true)}
   model: process.env.MODEL || 'anthropic/claude-3-7-sonnet-20250219',
   memory: new Memory({
     storage: new LibSQLStore({
-      id: 'financial-modeling-agent-storage',
       url: 'file:../../mastra.db',
     }),
     vector: new LibSQLVector({
-      id: 'financial-modeling-agent-vector',
       connectionUrl: 'file:../../mastra.db',
     }),
     embedder: fastembed,
@@ -74,7 +71,8 @@ ${getFinancialModelingAgentPrompt(true)}
 
     return composioTools;
   },
-  defaultOptions: { maxSteps: MAX_STEPS },
+  defaultGenerateOptions: { maxSteps: MAX_STEPS },
+  defaultStreamOptions: { maxSteps: MAX_STEPS },
 });
 
 const getFinancialModelingAgentPrompt = (needsAuth: boolean) => `
